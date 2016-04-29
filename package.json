@@ -1,0 +1,23 @@
+{
+  "name": "tinygl.js",
+  "version": "1.0.0",
+  "description": "TinyGL.js is a JavaScript library providing a tiny subset of OpenGL 1.1 compatible API",
+  "main": "js/tinygl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perjg/tinygl.js.git"
+  },
+  "keywords": [
+    "OpenGL",
+    "1.1"
+  ],
+  "author": "Humu <humu2009@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/perjg/tinygl.js/issues"
+  },
+  "homepage": "https://github.com/perjg/tinygl.js#readme"
+}
