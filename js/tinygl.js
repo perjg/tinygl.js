@@ -2494,22 +2494,33 @@ setTimeout(function(){setTimeout(function(){r.setStatus("")},1);ja||b()},1)):b()
  * just as what we do when requiring a canvas2D or a WebGL context. The function call will
  * automatically initialize the TinyGL runtime if it is not initialized yet.
  */
-if ((typeof HTMLCanvasElement) != 'undefined') {
-	try {
-		var default_get_context_func = HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.getContext = function() {
-			if (arguments[0] == 'experimental-tinygl') {
-				try {
-					// initialize TinyGL runtime if not yet
-					if (!TinyGLRenderingContext)
-						initializeTinyGLRuntime(arguments[1]);
-					return new TinyGLRenderingContext(this, arguments[1]);
-				} catch (e) {
-					return null;
+
+function TinyGL() {
+	if ((typeof HTMLCanvasElement) != 'undefined') {
+		try {
+			this.default_get_context_func = HTMLCanvasElement.prototype.getContext;
+			HTMLCanvasElement.prototype.getContext = function() {
+				if (arguments[0] == 'experimental-tinygl') {
+					try {
+						// initialize TinyGL runtime if not yet
+						if (!TinyGLRenderingContext)
+							initializeTinyGLRuntime(arguments[1]);
+						return new TinyGLRenderingContext(this, arguments[1]);
+					} catch (e) {
+						return null;
+					}
 				}
-			}
-			return default_get_context_func.apply(this, arguments);
-		};
-	} catch (e) {
+				return default_get_context_func.apply(this, arguments);
+			};
+		} catch (e) {
+		}
 	}
 }
+
+TinyGL.prototype.restore = function() {
+	if ((typeof HTMLCanvasElement) != 'undefined') {
+		HTMLCanvasElement.prototype.getContext = this.default_get_context_func;
+	}
+}
+
+module.exports = TinyGL;
